@@ -32,24 +32,22 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity mux_3bit_4to1 is
-port(
-        b_i           : in  std_logic_vector(4 - 1 downto 0);
-        a_i           : in  std_logic_vector(4 - 1 downto 0);
-        c_i           : in  std_logic_vector(4 - 1 downto 0);
-        d_i           : in  std_logic_vector(4 - 1 downto 0);
-        f_o           : out std_logic
-        adr_i         : in std_logic_vector(4-1 downto 0);
-        );
-end  mux_3bit_4to1;
+    Port ( sel : in STD_LOGIC_VECTOR (1 downto 0);
+           a_i : in STD_LOGIC_VECTOR (2 downto 0);
+           b_i : in STD_LOGIC_VECTOR (2 downto 0);
+           c_i : in STD_LOGIC_VECTOR (2 downto 0);
+           d_i : in STD_LOGIC_VECTOR (2 downto 0);
+           y_o : out STD_LOGIC_VECTOR (2 downto 0));
+end mux_3bit_4to1;
 
 architecture Behavioral of mux_3bit_4to1 is
 
 begin
+with sel select
+    y_o <= a_i when "00",  -- If addr_i = "000" then y_o = a_i
+           b_i when "01",
+           c_i when "10",
+           d_i when others; -- All other combinations
 
- f_o <= a_i when (addr_i = "000" ) else
-       b_i when (addr_i = "001" ) else
-       c_i when (addr_i = "010" ) else
-       d_i;                 -- All other combinations
-           
 
 end Behavioral;
