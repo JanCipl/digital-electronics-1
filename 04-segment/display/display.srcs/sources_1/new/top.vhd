@@ -82,43 +82,17 @@ begin
 
 -- Turn LED(7) on if input value is a power of two, ie 1, 2, 4, or 8
 -- LED(7) <= WRITE YOUR CODE HERE
+      
+LED(4) <= '1' when (SW = "0000") else '0';
+              
 
- with SW select
-    LED(4) <= '0' when "0000",
-              '1' when others;
+    LED(5) <= '1' when(SW > "1001")else '0';
               
- with SW select
-    LED(5) <= '0' when "1010",
-              '0' when "1011",
-              '0' when "1100",
-              '0' when "1101",
-              '0' when "1110",
-              '0' when "1111",
-              '1' when others;
+             
+   LED(6) <= '1' when(SW(0)= '1') else '0';
               
- with SW select
-    LED(6) <= '0' when "0001",
-              '0' when "0011",
-              '0' when "0101",
-              '0' when "0111",
-              '0' when "1001",
-              '0' when "1011",
-              '0' when "1101",
-              '0' when "1111",
-              '1' when others;
-              
-              with SW select
-   LED(7) <= '1' when "0001",
-              '1' when "0011",
-              '1' when "0101",
-              '1' when "0111",
-              '1' when "1001",
-              '1' when "1011",
-              '1' when "1101",
-              '1' when "1111",
-              '0' when others;
-           
-           
+   LED(7) <= '1' when(SW= "0001" or SW= "0010" or SW="0100" or SW="1000") else '0';   
+
            
            
 
