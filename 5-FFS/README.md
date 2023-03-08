@@ -2,9 +2,9 @@
 
 ### D & T Flip-flops
 
-1. Screenshot with simulated time waveforms. Try to simulate both D- and T-type flip-flops in a single testbench with a maximum duration of 200 ns, including reset. Always display all inputs and outputs (display the inputs at the top of the image, the outputs below them) at the appropriate time scale!
+1. Screenshot with simulated time waveforms. Try to simulate both D- and T-type flip-flops in a single testbench with a maximum duration of 350 ns, including reset. Always display all inputs and outputs (display the inputs at the top of the image, the outputs below them) at the appropriate time scale!
 
-   ![your figure]()
+   ![your figure](ukol1.PNG)
 
 ### JK Flip-flop
 
@@ -13,7 +13,21 @@
 ```vhdl
 architecture Behavioral of jk_ff_rst is
 
-    -- WRITE YOUR CODE HERE
+     if rising_edge(clk) then
+            if (rst = '1') then
+                    sig_q <= '0';
+                elsif (j= '0' and k='0' ) then
+                    sig_q <= sig_q;      		--nic se nemeni
+                elsif (j='0' and k='1') then
+                    sig_q <= '0';			-- reset
+                elsif (j='1' and k='0') then
+                    sig_q <='1';			-- set
+                elsif (j='1' and k='1') then
+                    sig_q <= not sig_q;			--zamena q
+               end if;
+       
+
+        end if;
 
     -- Output ports are permanently connected to local signal
     q     <= sig_q;
