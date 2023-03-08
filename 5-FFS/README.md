@@ -13,22 +13,27 @@
 ```vhdl
 architecture Behavioral of jk_ff_rst is
 
-     if rising_edge(clk) then
-            if (rst = '1') then
-                    sig_q <= '0';
-                elsif (j= '0' and k='0' ) then
-                    sig_q <= sig_q;      		--nic se nemeni
-                elsif (j='0' and k='1') then
-                    sig_q <= '0';			-- reset
-                elsif (j='1' and k='0') then
-                    sig_q <='1';			-- set
-                elsif (j='1' and k='1') then
-                    sig_q <= not sig_q;			--zamena q
-               end if;
+signal sig_q : std_logic;
+begin
+
+	p_JK_ff_rst : process (clk)
+	begin
+     		if rising_edge(clk) then
+            		if (rst = '1') then
+                    		sig_q <= '0';
+                	elsif (j= '0' and k='0' ) then
+                    		sig_q <= sig_q;      		--nic se nemeni
+                	elsif (j='0' and k='1') then
+                    		sig_q <= '0';			-- reset
+                	elsif (j='1' and k='0') then
+                    		sig_q <='1';			-- set
+                	elsif (j='1' and k='1') then
+                    		sig_q <= not sig_q;			--zamena q
+               		end if;
        
 
-        end if;
-
+        	end if;
+	end process p_JK_ff_rst;
     -- Output ports are permanently connected to local signal
     q     <= sig_q;
     q_bar <= not sig_q;
