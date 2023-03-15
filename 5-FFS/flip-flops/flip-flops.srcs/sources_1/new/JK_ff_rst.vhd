@@ -62,7 +62,7 @@ begin
                 elsif (j='1' and k='1') then
                     sig_q <= not sig_q;
                end if;
-        -- WRITE YOUR CODE HERE
+       
 
         end if;
     end process p_JK_ff_rst;
