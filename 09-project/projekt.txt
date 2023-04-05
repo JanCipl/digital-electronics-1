@@ -1,0 +1,5 @@
+neurčitý stav u =00
+stav tečky = 01
+stav čárky = 11
+
+
