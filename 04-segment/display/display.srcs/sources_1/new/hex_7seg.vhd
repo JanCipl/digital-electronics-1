@@ -78,7 +78,7 @@ begin
           when "0101011111" =>
           seg <= "0000110"; -- 3
           
-          when "01010101111" =>
+          when "0101010111" =>
           seg <= "1001100"; -- 4
           
           when "0101010101" =>
@@ -175,6 +175,8 @@ begin
           
           when "1111010100" =>
           seg <= "0010011"; -- Z
+          when others =>
+          seg<="1111111"; --chyba v zadani kodu
       end case;
 
     end if;
