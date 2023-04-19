@@ -33,7 +33,6 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity topHEX_7seg is
   Port ( 
-    SW   : in    std_logic_vector(9 downto 0);
     CA   : out   std_logic;
     CB   : out   std_logic;
     CC   : out   std_logic;
@@ -42,17 +41,22 @@ entity topHEX_7seg is
     CF   : out   std_logic;
     CG   : out   std_logic;
     AN   : out   std_logic_vector(7 downto 0);
-    BTNC : in    std_logic
+    BTNC : in    std_logic;
+    CLK100MHZ :  in   std_logic;
+    BTNL    :in std_logic;
+    BTNR    :in std_logic
   );
 end topHEX_7seg;
 
 architecture Behavioral of topHEX_7seg is
 
+signal sig_7segment : std_logic_vector (9 downto 0);
 begin
  hex2seg : entity work.hex_7seg
+ 
       port map(
           reset  => BTNC,
-          hex    => SW,
+          hex    => sig_7segment,
           seg(6) => CA,
           seg(5) => CB,
           seg(4) => CC,
@@ -61,6 +65,13 @@ begin
           seg(1) => CF,
           seg(0) => CG
       );
-      
+      input: entity work.input
+      port map(
+       clk      => CLK100MHZ,
+       rst      =>BTNC,
+       dot      =>BTNL,
+       dash     =>BTNR,
+       letter   =>sig_7segment
+      );
        AN <= b"1111_1110";
 end Behavioral;
