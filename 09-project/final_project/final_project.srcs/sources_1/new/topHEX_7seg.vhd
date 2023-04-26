@@ -44,12 +44,15 @@ entity topHEX_7seg is
     BTNC : in    std_logic;
     CLK100MHZ :  in   std_logic;
     BTNL    :in std_logic;
-    BTNR    :in std_logic
+    BTNR    :in std_logic;
+    LED : out std_logic
+    
   );
 end topHEX_7seg;
 
 architecture Behavioral of topHEX_7seg is
-
+signal sig_en : std_logic;
+signal sig_en_25 : std_logic;
 signal sig_7segment : std_logic_vector (9 downto 0);
 begin
  hex2seg : entity work.hex_7seg
@@ -71,7 +74,47 @@ begin
        rst      =>BTNC,
        dot      =>BTNL,
        dash     =>BTNR,
-       letter   =>sig_7segment
+       letter   =>sig_7segment,
+       en => sig_en
       );
+      
+      clk_en0 : entity work.clock_enable
+    generic map (
+      -- FOR SIMULATION, KEEP THIS VALUE TO 4
+      -- FOR IMPLEMENTATION, CHANGE THIS VALUE TO 400,000
+      -- 4      @ 4 ns
+      -- 400000 @ 4 ms
+      g_MAX => 25000000
+    )
+    port map (
+      clk => CLK100MHZ, --clk misto ce
+      rst => BTNC,
+      ce  => sig_en
+    );
+      
+            clk_en1 : entity work.clock_enable
+    generic map (
+      -- FOR SIMULATION, KEEP THIS VALUE TO 4
+      -- FOR IMPLEMENTATION, CHANGE THIS VALUE TO 400,000
+      -- 4      @ 4 ns
+      -- 400000 @ 4 ms
+      g_MAX => 25000000/10
+    )
+    port map (
+      clk => CLK100MHZ, --clk misto ce
+      rst => BTNC,
+      ce  => sig_en_25
+    );
+      
+   signal_behavorial: entity work.signal_behavorial
+    port map (
+        clk   =>CLK100MHZ,
+        sig_i =>sig_7segment,
+        sig_o =>LED,
+        en => sig_en_25
+    );
+
+      
+      
        AN <= b"1111_1110";
 end Behavioral;
